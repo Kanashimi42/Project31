@@ -146,47 +146,47 @@ BOOL mainDlg::DlgProc(HWND hwnd, UINT mes, WPARAM wp, LPARAM lp)
 
 BOOL mainDlg::Cls_OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 {
-	//        string ipAddress; // Адрес сервера
+	        string ipAddress; // Адрес сервера
 
-	//SendMessage(hList1, LB_ADDSTRING, 0, LPARAM(_T("Connecting\n")));
+	SendMessage(hList1, LB_ADDSTRING, 0, LPARAM(_T("Connecting\n")));
 
-	//cout << "Enter an IP address: " << endl;
-	//// Запрашиваем IP сервера
-	//cin >> ipAddress;
-	//if (ipAddress == "localhost")
-	//{
-	//  ipAddress = "";
-	//  char hostname[1024];
-	//  memset(hostname, 0, sizeof(hostname));
-	//  struct hostent* hostEntry;
-	//  if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0)
-	//  {
-	//    MessageBox(NULL, TEXT("WSAStartup failed!"), TEXT("Error"), MB_OK);
-	//    return FALSE;
-	//  }
-	//  gethostname(hostname, 1024);
-	//  hostEntry = gethostbyname(hostname);
-	//  char* localIP = inet_ntoa(*((struct in_addr*)hostEntry->h_addr_list[0]));
-	//  WSACleanup();
-	//  ipAddress = string(localIP);
-	//  cout << ipAddress << endl;
-	//}
-	//ClientSocket client;
-	//// Подключаемся к серверу
-	//client.ConnectToServer(ipAddress.c_str(), port);
-	//while (true)
-	//{
-	//  // Отправляем сообщение
-	//  client.SendDataMessage();
-	//  cout << "\tWaiting" << endl;
-	//  // Получаем ответ
-	//  client.ReceiveData(receiveMessage, MAXSTRLEN);
-	//  cout << "Received: " << receiveMessage << endl;
-	//  if (strcmp(receiveMessage, "end") == 0 || strcmp(sendMessage, "end") == 0)
-	//    break;
-	//}
-	//// Закрываем соединение
-	//client.CloseConnection();
+	cout << "Enter an IP address: " << endl;
+	// Запрашиваем IP сервера
+	cin >> ipAddress;
+	if (ipAddress == "localhost")
+	{
+	  ipAddress = "";
+	  char hostname[1024];
+	  memset(hostname, 0, sizeof(hostname));
+	  struct hostent* hostEntry;
+	  if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0)
+	  {
+	    MessageBox(NULL, TEXT("WSAStartup failed!"), TEXT("Error"), MB_OK);
+	    return FALSE;
+	  }
+	  gethostname(hostname, 1024);
+	  hostEntry = gethostbyname(hostname);
+	  char* localIP = inet_ntoa(*((struct in_addr*)hostEntry->h_addr_list[0]));
+	  WSACleanup();
+	  ipAddress = string(localIP);
+	  cout << ipAddress << endl;
+	}
+	ClientSocket client;
+	// Подключаемся к серверу
+	client.ConnectToServer(ipAddress.c_str(), port);
+	while (true)
+	{
+	  // Отправляем сообщение
+	  client.SendDataMessage();
+	  cout << "\tWaiting" << endl;
+	  // Получаем ответ
+	  client.ReceiveData(receiveMessage, MAXSTRLEN);
+	  cout << "Received: " << receiveMessage << endl;
+	  if (strcmp(receiveMessage, "end") == 0 || strcmp(sendMessage, "end") == 0)
+	    break;
+	}
+	// Закрываем соединение
+	client.CloseConnection();
 
 	return 0;
 }
